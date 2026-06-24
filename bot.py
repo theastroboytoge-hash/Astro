@@ -45,6 +45,17 @@ def main():
     updater.idle()
 
 if __name__ == "__main__":
+    main()    dp = updater.dispatcher
+    
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(MessageHandler(Filters.all & ~Filters.command, handle_file))
+    dp.add_handler(InlineQueryHandler(inline_query))
+    
+    print("ربات روشن شد!")
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == "__main__":
     main()    app.add_handler(MessageHandler(filters.ALL & ~filters.COMMAND, handle_file))
     app.add_handler(InlineQueryHandler(inline_query))
     print("ربات روشن شد!")
