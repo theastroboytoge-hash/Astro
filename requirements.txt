@@ -1,3 +1,4 @@
+setuptools==65.5.0
 python-telegram-bot==13.7
 urllib3==1.26.18
 standard-imghdr
