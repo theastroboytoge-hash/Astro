@@ -1,14 +1,14 @@
-from telegram import Update, InlineQueryResultCachedDocument
-from telegram.ext import Updater, CommandHandler, MessageHandler, InlineQueryHandler, Filters, CallbackContext
+from telegram import InlineQueryResultCachedDocument
+from telegram.ext import Updater, CommandHandler, MessageHandler, InlineQueryHandler, Filters
 
 TOKEN = "8743941600:AAEnpafnAFN4yuzvo84gO4Ex9unnj1xnzv0"
 
 file_store = {}
 
-def start(update: Update, context: CallbackContext):
+def start(bot, update):
     update.message.reply_text("سلام! یه فایل برام بفرست تا ذخیره کنم.")
 
-def handle_file(update: Update, context: CallbackContext):
+def handle_file(bot, update):
     file = update.message.document or update.message.photo or update.message.video or update.message.audio
     if file:
         file_id = file.file_id
@@ -17,8 +17,7 @@ def handle_file(update: Update, context: CallbackContext):
     else:
         update.message.reply_text("لطفاً یه فایل برام بفرست.")
 
-def inline_query(update: Update, context: CallbackContext):
-    query = update.inline_query.query
+def inline_query(bot, update):
     if 'last_file' in file_store:
         results = [
             InlineQueryResultCachedDocument(
@@ -33,8 +32,19 @@ def inline_query(update: Update, context: CallbackContext):
         update.inline_query.answer([])
 
 def main():
-    updater = Updater(TOKEN, use_context=True)
+    updater = Updater(TOKEN)
     dp = updater.dispatcher
+    
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(MessageHandler(Filters.all, handle_file))
+    dp.add_handler(InlineQueryHandler(inline_query))
+    
+    print("ربات روشن شد!")
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == "__main__":
+    main()    dp = updater.dispatcher
     
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(MessageHandler(Filters.all & ~Filters.command, handle_file))
