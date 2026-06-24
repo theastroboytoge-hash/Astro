@@ -1,7 +1,7 @@
 from telegram import InlineQueryResultCachedDocument
 from telegram.ext import Updater, CommandHandler, MessageHandler, InlineQueryHandler, Filters
 
-TOKEN = "8743941600:AAEnpafnAFN4yuzvo84gO4Ex9unnj1xnzv0"
+TOKEN = "8596547767:AAEU-sklvhsgDjGS2ewVi8n8UzQ0-5g7Q7U"
 
 file_store = {}
 
@@ -35,6 +35,16 @@ def main():
     updater = Updater(TOKEN)
     dp = updater.dispatcher
     
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(MessageHandler(Filters.all, handle_file))
+    dp.add_handler(InlineQueryHandler(inline_query))
+    
+    print("ربات روشن شد!")
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == "__main__":
+    main()    
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(MessageHandler(Filters.all, handle_file))
     dp.add_handler(InlineQueryHandler(inline_query))
