@@ -1,6 +1,6 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, InlineQueryHandler, Filters
 from telegram import InlineQueryResultCachedDocument
-TOKEN = "8596547767:AAEU-sklvhsgDjGS2ewVi8n8UzQ0-5g7Q7U"
+TOKEN = "8596547767:AAEOw8j46zqhtvnhkRsYMRyOqh7pxy0DlTs"
 file_store = {}
 def start(bot, update):
     update.message.reply_text("سلام! با /save [اسم] فایل رو ذخیره کن. مثال: /save logo")
